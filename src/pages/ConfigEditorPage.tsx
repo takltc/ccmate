@@ -1,4 +1,4 @@
-import { Kimi, ZAI } from "@lobehub/icons";
+import { DeepSeek, Kimi, ZAI } from "@lobehub/icons";
 import { ask } from "@tauri-apps/plugin-dialog";
 import { get, isEmpty, isPlainObject, set, transform } from "lodash-es";
 import { ChevronLeftIcon, PlusIcon, TrashIcon } from "lucide-react";
@@ -151,6 +151,19 @@ const createFields = (t: (key: string) => string): SectionConfig[] => [
 				type: "text",
 				description:
 					"API key sent as X-Api-Key header, typically for the Claude SDK",
+			},
+			{
+				label: "CLAUDE_CODE_SUBAGENT_MODEL",
+				name: "env.CLAUDE_CODE_SUBAGENT_MODEL",
+				type: "text",
+				description: "Model configuration for subagents",
+			},
+			{
+				label: "CLAUDE_CODE_EFFORT_LEVEL",
+				name: "env.CLAUDE_CODE_EFFORT_LEVEL",
+				type: "select",
+				description: "Control the effort level for Claude Code responses",
+				options: ["low", "medium", "high", "max"],
 			},
 		],
 	},
@@ -443,12 +456,6 @@ const createFields = (t: (key: string) => string): SectionConfig[] => [
 					"Skip Google authentication for Vertex (e.g., when using LLM gateway)",
 			},
 			{
-				label: "CLAUDE_CODE_SUBAGENT_MODEL",
-				name: "env.CLAUDE_CODE_SUBAGENT_MODEL",
-				type: "text",
-				description: "Model configuration for subagents",
-			},
-			{
 				label: "CLAUDE_CODE_USE_BEDROCK",
 				name: "env.CLAUDE_CODE_USE_BEDROCK",
 				type: "boolean",
@@ -625,7 +632,7 @@ export function ConfigEditorPage() {
 	const [highlightedField, setHighlightedField] = useState<string | null>(null);
 	const highlightTimerRef = useRef<number | null>(null);
 
-	const applyPreset = (preset: "z.ai-china" | "kimi" | "z.ai") => {
+	const applyPreset = (preset: "z.ai-china" | "kimi" | "z.ai" | "deepseek") => {
 		console.log("Applying preset:", preset);
 
 		if (preset === "z.ai-china") {
@@ -649,6 +656,14 @@ export function ConfigEditorPage() {
 			setValue("env.ANTHROPIC_DEFAULT_OPUS_MODEL", "glm-4.6");
 			setValue("env.ANTHROPIC_DEFAULT_SONNET_MODEL", "glm-4.6");
 			setValue("env.ANTHROPIC_DEFAULT_HAIKU_MODEL", "glm-4.5-Air");
+		} else if (preset === "deepseek") {
+			setValue("env.ANTHROPIC_BASE_URL", "https://api.deepseek.com/anthropic");
+			setValue("env.ANTHROPIC_MODEL", "deepseek-v4-pro[1m]");
+			setValue("env.ANTHROPIC_DEFAULT_OPUS_MODEL", "deepseek-v4-pro[1m]");
+			setValue("env.ANTHROPIC_DEFAULT_SONNET_MODEL", "deepseek-v4-pro[1m]");
+			setValue("env.ANTHROPIC_DEFAULT_HAIKU_MODEL", "deepseek-v4-flash");
+			setValue("env.CLAUDE_CODE_SUBAGENT_MODEL", "deepseek-v4-flash");
+			setValue("env.CLAUDE_CODE_EFFORT_LEVEL", "max");
 		}
 
 		// Clear any existing highlight timer
@@ -859,6 +874,12 @@ export function ConfigEditorPage() {
 																leftSection={<Kimi size={12} />}
 															>
 																Kimi AI
+															</Menu.Item>
+															<Menu.Item
+																onClick={() => applyPreset("deepseek")}
+																leftSection={<DeepSeek size={12} />}
+															>
+																DeepSeek
 															</Menu.Item>
 														</Menu.Dropdown>
 													</Menu>

@@ -288,5 +288,13 @@
 	"usage.activityGrid.6Months": "6个月",
 	"usage.activityGrid.thisYear": "今年",
 	"usage.activityGrid.less": "较少",
-	"usage.activityGrid.more": "较多"
+	"usage.activityGrid.more": "较多",
+	"deepseek.config": "配置 DeepSeek",
+	"deepseek.description": "在 Claude Code 中使用 DeepSeek",
+	"deepseek.step1": "第 1 步：创建 API Key",
+	"deepseek.enterConsole": "进入控制台",
+	"deepseek.step2": "第 2 步：输入 API Key",
+	"deepseek.apiKeyPlaceholder": "请输入你的 DeepSeek API Key",
+	"deepseek.createConfig": "创建配置",
+	"deepseek.useDeepSeek": "使用 DeepSeek"
 }

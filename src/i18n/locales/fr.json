@@ -281,5 +281,13 @@
 	"usage.activityGrid.6Months": "6 mois",
 	"usage.activityGrid.thisYear": "Cette année",
 	"usage.activityGrid.less": "Moins",
-	"usage.activityGrid.more": "Plus"
+	"usage.activityGrid.more": "Plus",
+	"deepseek.config": "Configurer DeepSeek",
+	"deepseek.description": "Utiliser DeepSeek dans Claude Code",
+	"deepseek.step1": "Étape 1 : Créer une clé API",
+	"deepseek.enterConsole": "Entrer dans la console",
+	"deepseek.step2": "Étape 2 : Entrer la clé API",
+	"deepseek.apiKeyPlaceholder": "Entrez votre clé API DeepSeek",
+	"deepseek.createConfig": "Créer la configuration",
+	"deepseek.useDeepSeek": "Utiliser DeepSeek"
 }

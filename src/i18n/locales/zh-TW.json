@@ -281,5 +281,13 @@
 	"usageChart.startOfMonth": "本月開始",
 	"usageChart.startOfToday": "今天開始",
 	"usageChart.startOfWeek": "本週開始",
-	"usageChart.timeRange": "時間範圍："
+	"usageChart.timeRange": "時間範圍：",
+	"deepseek.config": "設定 DeepSeek",
+	"deepseek.description": "在 Claude Code 中使用 DeepSeek",
+	"deepseek.step1": "第 1 步：建立 API Key",
+	"deepseek.enterConsole": "進入主控台",
+	"deepseek.step2": "第 2 步：輸入 API Key",
+	"deepseek.apiKeyPlaceholder": "請輸入你的 DeepSeek API Key",
+	"deepseek.createConfig": "建立設定",
+	"deepseek.useDeepSeek": "使用 DeepSeek"
 }

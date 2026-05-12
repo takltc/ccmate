@@ -281,5 +281,13 @@
 	"usage.activityGrid.6Months": "6ヶ月",
 	"usage.activityGrid.thisYear": "今年",
 	"usage.activityGrid.less": "少ない",
-	"usage.activityGrid.more": "多い"
+	"usage.activityGrid.more": "多い",
+	"deepseek.config": "DeepSeek を設定",
+	"deepseek.description": "Claude Code で DeepSeek を使用",
+	"deepseek.step1": "ステップ 1：API キーを作成",
+	"deepseek.enterConsole": "コンソールに入る",
+	"deepseek.step2": "ステップ 2：API キーを入力",
+	"deepseek.apiKeyPlaceholder": "DeepSeek API キーを入力してください",
+	"deepseek.createConfig": "設定を作成",
+	"deepseek.useDeepSeek": "DeepSeek を使用"
 }

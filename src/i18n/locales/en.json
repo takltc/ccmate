@@ -288,5 +288,13 @@
 	"usageChart.startOfMonth": "Start of this month",
 	"usageChart.startOfToday": "Start of today",
 	"usageChart.startOfWeek": "Start of this week",
-	"usageChart.timeRange": "Time Range:"
+	"usageChart.timeRange": "Time Range:",
+	"deepseek.config": "Configure DeepSeek",
+	"deepseek.description": "Use DeepSeek in Claude Code",
+	"deepseek.step1": "Step 1: Create API Key",
+	"deepseek.enterConsole": "Enter Console",
+	"deepseek.step2": "Step 2: Enter API Key",
+	"deepseek.apiKeyPlaceholder": "Enter your DeepSeek API Key",
+	"deepseek.createConfig": "Create Configuration",
+	"deepseek.useDeepSeek": "Use DeepSeek"
 }

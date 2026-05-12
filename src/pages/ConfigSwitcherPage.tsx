@@ -1,4 +1,4 @@
-import { Kimi, Minimax, ZAI } from "@lobehub/icons";
+import { DeepSeek, Kimi, Minimax, ZAI } from "@lobehub/icons";
 import {
 	ActionIcon,
 	Badge,
@@ -13,6 +13,7 @@ import { Fragment, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { GLMDialog } from "@/components/GLMBanner";
+import { DeepSeekDialog } from "@/components/DeepSeekDialog";
 import { KimiDialog } from "@/components/KimiDialog";
 import { MiniMaxDialog } from "@/components/MiniMaxDialog";
 import { PageHeader } from "@/components/PageHeader";
@@ -87,6 +88,7 @@ function ConfigStores() {
 	const [glmOpen, setGlmOpen] = useState(false);
 	const [minimaxOpen, setMinimaxOpen] = useState(false);
 	const [kimiOpen, setKimiOpen] = useState(false);
+	const [deepseekOpen, setDeepseekOpen] = useState(false);
 
 	const headerActions = (
 		<Menu position="bottom-end">
@@ -120,6 +122,12 @@ function ConfigStores() {
 					onClick={() => setKimiOpen(true)}
 				>
 					{t("kimi.useKimi")}
+				</Menu.Item>
+				<Menu.Item
+					leftSection={<DeepSeek size={16} />}
+					onClick={() => setDeepseekOpen(true)}
+				>
+					{t("deepseek.useDeepSeek")}
 				</Menu.Item>
 			</Menu.Dropdown>
 		</Menu>
@@ -244,6 +252,7 @@ function ConfigStores() {
 			<GLMDialog opened={glmOpen} onClose={() => setGlmOpen(false)} />
 			<MiniMaxDialog opened={minimaxOpen} onClose={() => setMinimaxOpen(false)} />
 			<KimiDialog opened={kimiOpen} onClose={() => setKimiOpen(false)} />
+			<DeepSeekDialog opened={deepseekOpen} onClose={() => setDeepseekOpen(false)} />
 		</div>
 	);
 }

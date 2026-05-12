@@ -1810,73 +1810,69 @@ pub async fn add_claude_code_hook() -> Result<(), String> {
     Ok(())
 }
 
-#[tauri::command]
-pub async fn remove_claude_code_hook() -> Result<(), String> {
+pub fn remove_claude_code_hooks_sync() -> Result<(), String> {
     let home_dir = dirs::home_dir().ok_or("Could not find home directory")?;
     let settings_path = home_dir.join(".claude/settings.json");
 
     if !settings_path.exists() {
-        return Ok(()); // Settings file doesn't exist, nothing to remove
+        return Ok(());
     }
 
-    // Read existing settings
     let content = std::fs::read_to_string(&settings_path)
         .map_err(|e| format!("Failed to read settings.json: {}", e))?;
 
     let mut settings: serde_json::Value = serde_json::from_str(&content)
         .map_err(|e| format!("Failed to parse settings.json: {}", e))?;
 
-    // Check if hooks object exists
     if let Some(hooks_obj) = settings.get_mut("hooks").and_then(|h| h.as_object_mut()) {
         let events = ["Notification", "Stop", "PreToolUse"];
 
         for event in events {
             if let Some(event_hooks) = hooks_obj.get_mut(event).and_then(|h| h.as_array_mut()) {
-                // Remove hooks that have __ccmate__ key from nested hooks arrays
                 let mut new_event_hooks = Vec::new();
                 for entry in event_hooks.iter() {
                     if let Some(hooks_array) = entry.get("hooks").and_then(|h| h.as_array()) {
-                        // Filter out hooks that have __ccmate__ key
-                        let filtered_hooks: Vec<serde_json::Value> = hooks_array.iter()
+                        let filtered_hooks: Vec<serde_json::Value> = hooks_array
+                            .iter()
                             .filter(|hook| hook.get("__ccmate__").is_none())
                             .cloned()
                             .collect();
 
-                        // Keep the entry only if it still has hooks
                         if !filtered_hooks.is_empty() {
                             let mut new_entry = entry.clone();
                             new_entry["hooks"] = serde_json::Value::Array(filtered_hooks);
                             new_event_hooks.push(new_entry);
                         }
                     } else {
-                        // Keep entries that don't have a hooks array
                         new_event_hooks.push(entry.clone());
                     }
                 }
                 *event_hooks = new_event_hooks;
 
-                // If the event hooks array is empty, remove the entire event entry
                 if event_hooks.is_empty() {
                     hooks_obj.remove(event);
                 }
             }
         }
 
-        // If hooks object is empty, remove it entirely
         if hooks_obj.is_empty() {
             settings.as_object_mut().unwrap().remove("hooks");
         }
     }
 
-    // Write back to settings file
     let json_content = serde_json::to_string_pretty(&settings)
         .map_err(|e| format!("Failed to serialize settings: {}", e))?;
 
     std::fs::write(&settings_path, json_content)
         .map_err(|e| format!("Failed to write settings.json: {}", e))?;
 
-    println!("✅ Claude Code hooks removed successfully");
+    eprintln!("ccmate hooks removed from Claude Code settings on exit");
     Ok(())
+}
+
+#[tauri::command]
+pub async fn remove_claude_code_hook() -> Result<(), String> {
+    remove_claude_code_hooks_sync()
 }
 
 #[tauri::command]

@@ -253,14 +253,22 @@ pub fn run() {
         .expect("error while building tauri application")
         .run(|app_handle, event| {
             use tauri::Manager;
-            #[cfg(target_os = "macos")]
-            if let tauri::RunEvent::Reopen { .. } = event {
-                // Handle dock icon click - show and focus the main window
-                if let Some(window) = app_handle.get_webview_window("main") {
-                    let _ = window.unminimize();
-                    let _ = window.show();
-                    let _ = window.set_focus();
+            match event {
+                tauri::RunEvent::Exit => {
+                    if let Err(e) = remove_claude_code_hooks_sync() {
+                        eprintln!("Failed to remove ccmate hooks on exit: {}", e);
+                    }
                 }
+                #[cfg(target_os = "macos")]
+                tauri::RunEvent::Reopen { .. } => {
+                    // Handle dock icon click - show and focus the main window
+                    if let Some(window) = app_handle.get_webview_window("main") {
+                        let _ = window.unminimize();
+                        let _ = window.show();
+                        let _ = window.set_focus();
+                    }
+                }
+                _ => {}
             }
         });
 }
